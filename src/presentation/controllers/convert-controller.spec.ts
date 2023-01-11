@@ -68,7 +68,7 @@ describe('ConvertController', () => {
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body.message).toBe('missing param: userId')
+    expect(httpResponse.body).toBe('missing param: userId')
   })
 
   test('Should return 400 if originCurrency is not provided', async () => {
@@ -83,7 +83,7 @@ describe('ConvertController', () => {
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body.message).toBe('missing param: originCurrency')
+    expect(httpResponse.body).toBe('missing param: originCurrency')
   })
 
   test('Should return 400 if originAmount is not provided', async () => {
@@ -98,7 +98,7 @@ describe('ConvertController', () => {
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body.message).toBe('missing param: originAmount')
+    expect(httpResponse.body).toBe('missing param: originAmount')
   })
 
   test('Should return 400 if destinationCurrency is not provided', async () => {
@@ -113,7 +113,24 @@ describe('ConvertController', () => {
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body.message).toBe('missing param: destinationCurrency')
+    expect(httpResponse.body).toBe('missing param: destinationCurrency')
+  })
+
+  test('Should return 400 if invalid originCurrency is provided', async () => {
+    const { sut } = makeSut()
+
+    const httpRequest: HttpRequest = {
+      body: {
+        userId: '1234',
+        originCurrency: 'BRLSDP',
+        originAmount: 123.5,
+        destinationCurrency: 'USD',
+      },
+    }
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toBe('invalid param: BRLSDP')
   })
 
   test('Should call ConvertUsecase with correct values', async () => {
