@@ -6,11 +6,21 @@
  * Taxa de convers�o utilizada;
  * Data/Hora UTC;
  */
-import { HttpRequest } from '../../protocols/http'
+import { HttpRequest } from '../protocols/http'
 import { ConventController } from './convert-controller'
+
+const makeSut = () => {
+  const sut = new ConventController()
+
+  return {
+    sut,
+  }
+}
 
 describe('ConvertController', () => {
   test('Should return 400 if userId is not provided', async () => {
+    const { sut } = makeSut()
+
     const httpRequest: HttpRequest = {
       body: {
         originCurrency: 'BRL',
@@ -18,7 +28,6 @@ describe('ConvertController', () => {
         destinationCurrency: 'USD',
       },
     }
-    const sut = new ConventController()
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toBe('missing param: userId')

@@ -1,5 +1,5 @@
-import { Controller } from '../../protocols/controller'
-import { HttpRequest, HttpResponse } from '../../protocols/http'
+import { Controller } from '../protocols/controller'
+import { HttpRequest, HttpResponse } from '../protocols/http'
 
 export class ConventController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
