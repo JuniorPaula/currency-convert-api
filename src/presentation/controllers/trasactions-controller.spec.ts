@@ -1,3 +1,4 @@
+import { ServerError } from '../errors/server-error'
 import { HttpRequest } from '../protocols/http'
 import { TransactionController } from './transactions-controller'
 
@@ -45,5 +46,24 @@ describe('TransactionController', () => {
     }
     await sut.handle(httpRequest)
     expect(spy).toHaveBeenCalledWith({ userId: '123' })
+  })
+
+  test('Should return 500 if TransactionsUsecase throws', async () => {
+    const { sut, transactionsUsecaseStub } = makeSut()
+    jest
+      .spyOn(transactionsUsecaseStub, 'load')
+      .mockImplementationOnce(async () => {
+        return await new Promise((resolve, reject) => reject(new Error()))
+      })
+
+    const httpRequest: HttpRequest = {
+      params: {
+        userId: '123',
+      },
+    }
+
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })
