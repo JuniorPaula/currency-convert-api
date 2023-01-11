@@ -5,11 +5,12 @@ import { HttpStatusCodes } from '../utils/http-status-codes'
 
 export class ConventController implements Controller {
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    if (!httpRequest.body.userId) {
-      return HttpStatusCodes.badRequest(new MissingParamError('userId'))
-    }
-    if (!httpRequest.body.originCurrency) {
-      return HttpStatusCodes.badRequest(new MissingParamError('originCurrency'))
+    const fields = ['userId', 'originCurrency']
+
+    for (const field of fields) {
+      if (!httpRequest.body[field]) {
+        return HttpStatusCodes.badRequest(new MissingParamError(field))
+      }
     }
   }
 }
