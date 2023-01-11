@@ -32,4 +32,19 @@ describe('ConvertController', () => {
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body.message).toBe('missing param: userId')
   })
+
+  test('Should return 400 if originCurrency is not provided', async () => {
+    const { sut } = makeSut()
+
+    const httpRequest: HttpRequest = {
+      body: {
+        userId: '1234',
+        originAmount: 123.5,
+        destinationCurrency: 'USD',
+      },
+    }
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body.message).toBe('missing param: originCurrency')
+  })
 })
