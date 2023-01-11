@@ -5,29 +5,29 @@ export class ConvertUsecase {
   ) {}
 
   async convert({ userId, originCurrency, originAmount, destinationCurrency }) {
-    const result = await this.apiLayerService.execute({
+    const response = await this.apiLayerService.execute({
       originCurrency,
       originAmount,
       destinationCurrency,
     })
 
-    await this.convertRepository.save({
+    const result = await this.convertRepository.save({
       userId,
       originCurrency,
       originAmount,
       destinationCurrency,
-      currencyTax: result.quote,
+      currencyTax: response.quote,
       timeConvert: new Date(),
     })
 
     const amountConverted = {
-      id: 'asdf-1234',
+      trasactionId: result._id,
       userId,
       originCurrency,
       originAmount,
       destinationCurrency,
-      destinationValue: result.amount,
-      currencyTax: result.quote,
+      destinationValue: response.amount,
+      currencyTax: response.quote,
       timeConvert: new Date(),
     }
 
