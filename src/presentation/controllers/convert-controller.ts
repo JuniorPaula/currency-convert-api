@@ -8,5 +8,8 @@ export class ConventController implements Controller {
     if (!httpRequest.body.userId) {
       return HttpStatusCodes.badRequest(new MissingParamError('userId'))
     }
+    if (!httpRequest.body.originCurrency) {
+      return HttpStatusCodes.badRequest(new MissingParamError('originCurrency'))
+    }
   }
 }
