@@ -23,12 +23,14 @@ export class ConventController implements Controller {
       const { userId, originAmount, originCurrency, destinationCurrency } =
         httpRequest.body
 
-      await this.convertUsecaseStub.convert({
+      const amountConverted = await this.convertUsecaseStub.convert({
         userId,
         originAmount,
         originCurrency,
         destinationCurrency,
       })
+
+      return HttpStatusCodes.ok(amountConverted)
     } catch (err) {
       return HttpStatusCodes.serverError()
     }
