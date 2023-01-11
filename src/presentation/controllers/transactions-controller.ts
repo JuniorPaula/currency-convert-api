@@ -7,11 +7,15 @@ export class TransactionController implements Controller {
   constructor(private readonly transactionsUsecase) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    const { userId } = httpRequest.params
-    if (!userId) {
-      return HttpStatusCodes.badRequest(new MissingParamError('userId'))
-    }
+    try {
+      const { userId } = httpRequest.params
+      if (!userId) {
+        return HttpStatusCodes.badRequest(new MissingParamError('userId'))
+      }
 
-    await this.transactionsUsecase.load({ userId })
+      await this.transactionsUsecase.load({ userId })
+    } catch (err) {
+      return HttpStatusCodes.serverError()
+    }
   }
 }
