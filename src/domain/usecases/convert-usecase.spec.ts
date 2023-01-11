@@ -71,7 +71,7 @@ describe('ConvertUsecase', () => {
     })
   })
 
-  test('Should throw if loadAccountByEmailRepository throws', async () => {
+  test('Should throw if ApiLayerService throws', async () => {
     const { sut, apiLayerService } = makeSut()
     jest
       .spyOn(apiLayerService, 'execute')
@@ -105,5 +105,20 @@ describe('ConvertUsecase', () => {
       currencyTax: 0.192385,
       timeConvert: new Date(),
     })
+  })
+
+  test('Should throw if ConvertRepository throws', async () => {
+    const { sut, convertRepository } = makeSut()
+    jest
+      .spyOn(convertRepository, 'save')
+      .mockReturnValueOnce(Promise.reject(new Error()))
+
+    const promise = sut.convert({
+      userId: '1234',
+      originCurrency: 'BRL',
+      originAmount: 123.5,
+      destinationCurrency: 'USD',
+    })
+    await expect(promise).rejects.toThrow()
   })
 })
