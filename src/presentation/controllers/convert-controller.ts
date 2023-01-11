@@ -4,6 +4,8 @@ import { HttpRequest, HttpResponse } from '../protocols/http'
 import { HttpStatusCodes } from '../utils/http-status-codes'
 
 export class ConventController implements Controller {
+  constructor(private readonly convertUsecaseStub) {}
+
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     const fields = [
       'userId',
@@ -17,5 +19,14 @@ export class ConventController implements Controller {
         return HttpStatusCodes.badRequest(new MissingParamError(field))
       }
     }
+    const { userId, originAmount, originCurrency, destinationCurrency } =
+      httpRequest.body
+
+    await this.convertUsecaseStub.convert({
+      userId,
+      originAmount,
+      originCurrency,
+      destinationCurrency,
+    })
   }
 }
