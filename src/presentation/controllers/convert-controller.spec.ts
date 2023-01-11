@@ -1,19 +1,36 @@
-/**
- *  * ID do usu�rio;
- * Moeda origem;
- * Valor origem;
- * Moeda destino;
- * Taxa de convers�o utilizada;
- * Data/Hora UTC;
- */
 import { HttpRequest } from '../protocols/http'
 import { ConventController } from './convert-controller'
 
+const mockConvertUsecase = () => {
+  class ConvertUsecaseStub {
+    private userId: string
+    private originCurrency: string
+    private originAmount: string
+    private destinationCurrency: string
+
+    async convert({
+      userId,
+      originCurrency,
+      originAmount,
+      destinationCurrency,
+    }) {
+      this.userId = userId
+      this.originCurrency = originCurrency
+      this.originAmount = originAmount
+      this.destinationCurrency = destinationCurrency
+    }
+  }
+
+  return new ConvertUsecaseStub()
+}
+
 const makeSut = () => {
-  const sut = new ConventController()
+  const convertUsecaseStub = mockConvertUsecase()
+  const sut = new ConventController(convertUsecaseStub)
 
   return {
     sut,
+    convertUsecaseStub,
   }
 }
 
@@ -76,5 +93,25 @@ describe('ConvertController', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body.message).toBe('missing param: destinationCurrency')
+  })
+
+  test('Should call ConvertUsecase with correct values', async () => {
+    const { sut, convertUsecaseStub } = makeSut()
+    const spy = jest.spyOn(convertUsecaseStub, 'convert')
+    const httpRequest: HttpRequest = {
+      body: {
+        userId: '1234',
+        originCurrency: 'BRL',
+        originAmount: 123.5,
+        destinationCurrency: 'USD',
+      },
+    }
+    await sut.handle(httpRequest)
+    expect(spy).toHaveBeenCalledWith({
+      userId: '1234',
+      originCurrency: 'BRL',
+      originAmount: 123.5,
+      destinationCurrency: 'USD',
+    })
   })
 })
