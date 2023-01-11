@@ -13,7 +13,9 @@ export class TransactionController implements Controller {
         return HttpStatusCodes.badRequest(new MissingParamError('userId'))
       }
 
-      await this.transactionsUsecase.load({ userId })
+      const transactions = await this.transactionsUsecase.load({ userId })
+
+      return HttpStatusCodes.ok(transactions)
     } catch (err) {
       return HttpStatusCodes.serverError()
     }
