@@ -5,6 +5,19 @@ const mockTransactionsRepository = () => {
     userId: string
     async getTransactions({ userId }) {
       this.userId = userId
+
+      return Promise.resolve([
+        {
+          trasactionId: '63bf20928a5c7d64453f1462',
+          userId: '0321',
+          originCurrency: 'USD',
+          originAmount: 100,
+          destinationCurrency: 'JPY',
+          destinationValue: 13245.1985,
+          currencyTax: 132.451985,
+          timeConvert: '2023-01-11T20:48:18.523Z',
+        },
+      ])
     }
   }
 
@@ -38,5 +51,24 @@ describe('TransactionsUsecase', () => {
 
     const promise = sut.load({ userId: '0312' })
     await expect(promise).rejects.toThrow()
+  })
+
+  test('Should return a transactions if TransactionsRepository succeeds', async () => {
+    const { sut } = makeSut()
+
+    const transactions = await sut.load({ userId: '0312' })
+
+    expect(transactions).toEqual([
+      {
+        trasactionId: '63bf20928a5c7d64453f1462',
+        userId: '0321',
+        originCurrency: 'USD',
+        originAmount: 100,
+        destinationCurrency: 'JPY',
+        destinationValue: 13245.1985,
+        currencyTax: 132.451985,
+        timeConvert: '2023-01-11T20:48:18.523Z',
+      },
+    ])
   })
 })
