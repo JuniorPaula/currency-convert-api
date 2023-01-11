@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import MockDate from 'mockdate'
 import { ConvertUsecase } from './convert-usecase'
 
@@ -11,7 +12,15 @@ const mockConvertRepository = () => {
       currencyTax,
       timeConvert,
     }) {
-      return null
+      return Promise.resolve({
+        _id: '123-asdf',
+        userId: '1234',
+        originCurrency: 'BRL',
+        originAmount: 123.5,
+        destinationCurrency: 'USD',
+        currencyTax: 0.192385,
+        timeConvert: new Date(),
+      })
     }
   }
 
@@ -120,5 +129,26 @@ describe('ConvertUsecase', () => {
       destinationCurrency: 'USD',
     })
     await expect(promise).rejects.toThrow()
+  })
+
+  test('Should return a transaction on success', async () => {
+    const { sut } = makeSut()
+
+    const amountConverted = await sut.convert({
+      userId: '1234',
+      originCurrency: 'BRL',
+      originAmount: 123.5,
+      destinationCurrency: 'USD',
+    })
+    expect(amountConverted).toEqual({
+      trasactionId: '123-asdf',
+      userId: '1234',
+      originCurrency: 'BRL',
+      originAmount: 123.5,
+      destinationCurrency: 'USD',
+      destinationValue: 23.759548,
+      currencyTax: 0.192385,
+      timeConvert: new Date(),
+    })
   })
 })
