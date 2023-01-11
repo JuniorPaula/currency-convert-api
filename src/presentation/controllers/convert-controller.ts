@@ -7,26 +7,30 @@ export class ConventController implements Controller {
   constructor(private readonly convertUsecaseStub) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    const fields = [
-      'userId',
-      'originCurrency',
-      'originAmount',
-      'destinationCurrency',
-    ]
+    try {
+      const fields = [
+        'userId',
+        'originCurrency',
+        'originAmount',
+        'destinationCurrency',
+      ]
 
-    for (const field of fields) {
-      if (!httpRequest.body[field]) {
-        return HttpStatusCodes.badRequest(new MissingParamError(field))
+      for (const field of fields) {
+        if (!httpRequest.body[field]) {
+          return HttpStatusCodes.badRequest(new MissingParamError(field))
+        }
       }
-    }
-    const { userId, originAmount, originCurrency, destinationCurrency } =
-      httpRequest.body
+      const { userId, originAmount, originCurrency, destinationCurrency } =
+        httpRequest.body
 
-    await this.convertUsecaseStub.convert({
-      userId,
-      originAmount,
-      originCurrency,
-      destinationCurrency,
-    })
+      await this.convertUsecaseStub.convert({
+        userId,
+        originAmount,
+        originCurrency,
+        destinationCurrency,
+      })
+    } catch (err) {
+      return HttpStatusCodes.serverError()
+    }
   }
 }
