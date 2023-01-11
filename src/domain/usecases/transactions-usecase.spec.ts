@@ -29,4 +29,14 @@ describe('TransactionsUsecase', () => {
 
     expect(spy).toHaveBeenCalledWith({ userId: '0312' })
   })
+
+  test('Should throw if TransactionsRepository throws', async () => {
+    const { sut, transactionsRepositoryStub } = makeSut()
+    jest
+      .spyOn(transactionsRepositoryStub, 'getTransactions')
+      .mockReturnValueOnce(Promise.reject(new Error()))
+
+    const promise = sut.load({ userId: '0312' })
+    await expect(promise).rejects.toThrow()
+  })
 })
