@@ -4,8 +4,9 @@
   "description": "Teste de seleção NodeJS",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
-    "test:staged": "jest",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
+    "test:unit": "npm test -- -c jest-unit-config.js",
+    "test:staged": "npm test -- --findRelatedTests",
     "prepare": "husky install"
   },
   "author": "Junior Paula",
