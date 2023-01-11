@@ -1,10 +1,10 @@
 import * as dotenv from 'dotenv'
-import express from 'express'
+import * as express from 'express'
 import { MongoProvider } from '../infra/providers/mongodb'
 import { setupRoutes } from './routes'
 
 const app = express()
-
+app.use(express.json())
 setupRoutes(app)
 
 dotenv.config()
