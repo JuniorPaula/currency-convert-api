@@ -1,3 +1,4 @@
+import { ServerError } from '../errors/server-error'
 import { HttpRequest } from '../protocols/http'
 import { ConventController } from './convert-controller'
 
@@ -113,5 +114,27 @@ describe('ConvertController', () => {
       originAmount: 123.5,
       destinationCurrency: 'USD',
     })
+  })
+
+  test('Should return 500 if ConvertUsecase throws', async () => {
+    const { sut, convertUsecaseStub } = makeSut()
+    jest
+      .spyOn(convertUsecaseStub, 'convert')
+      .mockImplementationOnce(async () => {
+        return await new Promise((resolve, reject) => reject(new Error()))
+      })
+
+    const httpRequest: HttpRequest = {
+      body: {
+        userId: '1234',
+        originCurrency: 'BRL',
+        originAmount: 123.5,
+        destinationCurrency: 'USD',
+      },
+    }
+
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(500)
+    expect(httpResponse.body).toEqual(new ServerError())
   })
 })
