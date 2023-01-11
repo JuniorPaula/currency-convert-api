@@ -1,3 +1,4 @@
+import MockDate from 'mockdate'
 import { ServerError } from '../errors/server-error'
 import { HttpRequest } from '../protocols/http'
 import { ConventController } from './convert-controller'
@@ -19,6 +20,17 @@ const mockConvertUsecase = () => {
       this.originCurrency = originCurrency
       this.originAmount = originAmount
       this.destinationCurrency = destinationCurrency
+
+      return Promise.resolve({
+        id: 'asdf-1234',
+        userId: '1234',
+        originCurrency: 'BRL',
+        originAmount: 123.5,
+        destinationCurrency: 'USD',
+        destinationValue: 23.73,
+        currencyTax: 0.191,
+        timeConvert: new Date(),
+      })
     }
   }
 
@@ -36,6 +48,14 @@ const makeSut = () => {
 }
 
 describe('ConvertController', () => {
+  beforeAll(() => {
+    MockDate.set(new Date())
+  })
+
+  afterAll(() => {
+    MockDate.reset()
+  })
+
   test('Should return 400 if userId is not provided', async () => {
     const { sut } = makeSut()
 
@@ -136,5 +156,31 @@ describe('ConvertController', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(500)
     expect(httpResponse.body).toEqual(new ServerError())
+  })
+
+  test('Should returns 200 if transaction succeeds', async () => {
+    const { sut } = makeSut()
+
+    const httpRequest: HttpRequest = {
+      body: {
+        userId: '1234',
+        originCurrency: 'BRL',
+        originAmount: 123.5,
+        destinationCurrency: 'USD',
+      },
+    }
+
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.statusCode).toBe(200)
+    expect(httpResponse.body).toEqual({
+      id: 'asdf-1234',
+      userId: '1234',
+      originCurrency: 'BRL',
+      originAmount: 123.5,
+      destinationCurrency: 'USD',
+      destinationValue: 23.73,
+      currencyTax: 0.191,
+      timeConvert: new Date(),
+    })
   })
 })
