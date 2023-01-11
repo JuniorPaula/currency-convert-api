@@ -30,6 +30,6 @@ describe('ConvertController', () => {
     }
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toBe('missing param: userId')
+    expect(httpResponse.body.message).toBe('missing param: userId')
   })
 })
