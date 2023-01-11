@@ -1,11 +1,12 @@
-export class ConventController {
-  async handle(httpRequest) {
+import { Controller } from '../../protocols/controller'
+import { HttpRequest, HttpResponse } from '../../protocols/http'
+
+export class ConventController implements Controller {
+  async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     if (!httpRequest.body.userId) {
       return {
         statusCode: 400,
-        error: {
-          message: 'missing param: userId',
-        },
+        body: 'missing param: userId',
       }
     }
   }
