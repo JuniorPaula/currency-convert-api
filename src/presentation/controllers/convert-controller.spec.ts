@@ -133,6 +133,23 @@ describe('ConvertController', () => {
     expect(httpResponse.body).toBe('invalid param: BRLSDP')
   })
 
+  test('Should return 400 if invalid destinationCurrency is provided', async () => {
+    const { sut } = makeSut()
+
+    const httpRequest: HttpRequest = {
+      body: {
+        userId: '1234',
+        originCurrency: 'BRL',
+        originAmount: 123.5,
+        destinationCurrency: 'USDLP',
+      },
+    }
+    const httpResponse = await sut.handle(httpRequest)
+
+    expect(httpResponse.statusCode).toBe(400)
+    expect(httpResponse.body).toBe('invalid param: USDLP')
+  })
+
   test('Should call ConvertUsecase with correct values', async () => {
     const { sut, convertUsecaseStub } = makeSut()
     const spy = jest.spyOn(convertUsecaseStub, 'convert')
