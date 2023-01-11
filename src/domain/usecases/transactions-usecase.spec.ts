@@ -11,12 +11,20 @@ const mockTransactionsRepository = () => {
   return new TransactionsRepositoryStub()
 }
 
-const transactionsRepositoryStub = mockTransactionsRepository()
+const makeSut = () => {
+  const transactionsRepositoryStub = mockTransactionsRepository()
+  const sut = new TransactionsUsecase(transactionsRepositoryStub)
+
+  return {
+    sut,
+    transactionsRepositoryStub,
+  }
+}
 
 describe('TransactionsUsecase', () => {
   test('Should call TransactionsRepository with correct param', async () => {
+    const { sut, transactionsRepositoryStub } = makeSut()
     const spy = jest.spyOn(transactionsRepositoryStub, 'getTransactions')
-    const sut = new TransactionsUsecase(transactionsRepositoryStub)
     await sut.load({ userId: '0312' })
 
     expect(spy).toHaveBeenCalledWith({ userId: '0312' })
