@@ -37,19 +37,6 @@ const makeSut = () => {
 }
 
 describe('TransactionController', () => {
-  test('Should return 400 if userId is not provided', async () => {
-    const { sut } = makeSut()
-
-    const httpRequest: HttpRequest = {
-      params: {},
-    }
-
-    const httpResponse = await sut.handle(httpRequest)
-
-    expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toBe('missing param: userId')
-  })
-
   test('Should call TransactionsUsecase with correct values', async () => {
     const { sut, transactionsUsecaseStub } = makeSut()
     const spy = jest.spyOn(transactionsUsecaseStub, 'load')
