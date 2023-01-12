@@ -1,50 +1,210 @@
 # Conversor de moedas
 
-VocÍ dever· implementar uma API Rest que seja capaz de realizar a convers„o entre duas moedas
-utilizando taxas de conversıes atualizadas de um serviÁo externo.
+VocÔøΩ deverÔøΩ implementar uma API Rest que seja capaz de realizar a conversÔøΩo entre duas moedas
+utilizando taxas de conversÔøΩes atualizadas de um serviÔøΩo externo.
 
-Para realizaÁ„o da convers„o È necess·rio o ID do usu·rio que deseja realizar a convers„o.
+Para realizaÔøΩÔøΩo da conversÔøΩo ÔøΩ necessÔøΩrio o ID do usuÔøΩrio que deseja realizar a conversÔøΩo.
 
-A API dever· registrar cada transaÁ„o de convers„o com todas as informaÁıes relacionadas e tambÈm
-disponibilizar um endpoint para consulta das transaÁıes realizadas por um usu·rio.
+A API deverÔøΩ registrar cada transaÔøΩÔøΩo de conversÔøΩo com todas as informaÔøΩÔøΩes relacionadas e tambÔøΩm
+disponibilizar um endpoint para consulta das transaÔøΩÔøΩes realizadas por um usuÔøΩrio.
 
-O projeto dever· ser feito em Node.js com TypeScript.
+O projeto deverÔøΩ ser feito em Node.js com TypeScript.
 
-1. Deve ser possÌvel realizar a convers„o entre 4 moedas no mÌnimo (BRL, USD, EUR, JPY);
-1. As taxas de convers„o devem ser obtidas de [https://api.exchangeratesapi.io/latest?base=USD];
-1. As transaÁıes de convers„o devem ser persistidas no banco de dados (embedded) contendo:
-    * ID do usu·rio;
+1. Deve ser possÔøΩvel realizar a conversÔøΩo entre 4 moedas no mÔøΩnimo (BRL, USD, EUR, JPY);
+1. As taxas de conversÔøΩo devem ser obtidas de [https://api.exchangeratesapi.io/latest?base=USD];
+1. As transaÔøΩÔøΩes de conversÔøΩo devem ser persistidas no banco de dados (embedded) contendo:
+    * ID do usuÔøΩrio;
     * Moeda origem;
     * Valor origem;
     * Moeda destino;
-    * Taxa de convers„o utilizada;
+    * Taxa de conversÔøΩo utilizada;
     * Data/Hora UTC;
-1. Uma transaÁ„o com sucesso deve retornar:
-    * ID da transaÁ„o
-    * ID do usu·rio;
+1. Uma transaÔøΩÔøΩo com sucesso deve retornar:
+    * ID da transaÔøΩÔøΩo
+    * ID do usuÔøΩrio;
     * Moeda origem;
     * Valor origem;
     * Moeda destino;
     * Valor destino;
-    * Taxa de convers„o utilizada;
+    * Taxa de conversÔøΩo utilizada;
     * Data/Hora UTC;
-1. Uma transaÁ„o com falha conhecida deve retornar um erro HTTP 400 com a descriÁ„o da falha;
-1. Dever· existir um endpoint para listagem de todas as transaÁıes realizadas por usu·rio;
-1. Deve haver uma cobertura satisfatÛria de testes;
-1. Deve-se adicionar a esse arquivo explicaÁıes sobre como rodar a aplicaÁ„o, e uma apresentaÁ„o sobre o
-projeto: propÛsito, features, motivaÁ„o das principais escolhas de tecnologias, e separaÁ„o das camadas;
-1. Todo o cÛdigo deve ser em inglÍs;
-1. Disponibilizar o cÛdigo apenas nesse repositÛrio, sem nenhuma cÛpia p˙blica, para evitar pl·gio;
+1. Uma transaÔøΩÔøΩo com falha conhecida deve retornar um erro HTTP 400 com a descriÔøΩÔøΩo da falha;
+1. DeverÔøΩ existir um endpoint para listagem de todas as transaÔøΩÔøΩes realizadas por usuÔøΩrio;
+1. Deve haver uma cobertura satisfatÔøΩria de testes;
+1. Deve-se adicionar a esse arquivo explicaÔøΩÔøΩes sobre como rodar a aplicaÔøΩÔøΩo, e uma apresentaÔøΩÔøΩo sobre o
+projeto: propÔøΩsito, features, motivaÔøΩÔøΩo das principais escolhas de tecnologias, e separaÔøΩÔøΩo das camadas;
+1. Todo o cÔøΩdigo deve ser em inglÔøΩs;
+1. Disponibilizar o cÔøΩdigo apenas nesse repositÔøΩrio, sem nenhuma cÔøΩpia pÔøΩblica, para evitar plÔøΩgio;
 
-## Itens desej·veis
+## Itens desejÔøΩveis
 * Logs
-* Tratamento de exceÁıes
-* DocumentaÁ„o
-* Coes„o de commits
+* Tratamento de exceÔøΩÔøΩes
+* DocumentaÔøΩÔøΩo
+* CoesÔøΩo de commits
 * Mensagens de commits claras
-* ConfiguraÁ„o de lint
-* Testes unit·rios
-* Testes de integraÁ„o
-* DocumentaÁ„o dos endpoints
-* Estar rodando e disponÌvel (Ex: Heroku, ou similar)
+* ConfiguraÔøΩÔøΩo de lint
+* Testes unitÔøΩrios
+* Testes de integraÔøΩÔøΩo
+* DocumentaÔøΩÔøΩo dos endpoints
+* Estar rodando e disponÔøΩvel (Ex: Heroku, ou similar)
 * CI/CD
+
+# Instru√ß√µes do projeto
+
+API foi **desenvolvida** utilizando uma arquitetura bem definida e tentando deixar ao m√°ximo desacoplada, utilizando **TDD** como metodologia de trabalho e seguindo um pouco as boas pr√°ticas do **Clean Architecture** para fazer a distribui√ß√£o das responsabilidades em camadas, e sempre que poss√≠vel utilizando os princ√≠pios do **SOLID**.
+
+## Tecnologias utilizadas 
+A utiliza√ß√£o das tecnologias foi pensada a fim de facilitar o desenvolvimento, tais como: **NodeJS** e **Typescript** como stack principal, **Express** para roteamento das rotas e subir o servidor, **Axios** para chamadas a endpoits externos, **Mongodb** para a persist√™ncia dos dados, **Husky**, **Eslint**, **Prettier**, **Linter-staged** para configura√ß√£o de linter, **Jest** para rodar os teste de unidade e integra√ß√£o, e **Shelf/jest-mongodb** para facilitar os teste de integra√ß√£o com o banco mocado em mem√≥ria, **Docker** para facilitar o desenvolvimento e deploy.  
+
+## Alguns patterns utilizados
+- Composite
+- Adapter
+- Factory
+- Dependency Injection
+- Single Responsibility
+
+### Instru√ß√µes para rodar o projeto
+
+Os requisitos necess√°rios s√£o:
+
+- Node >= 16
+- npm >= 8
+- Mongodb > 4
+- docker >= 20
+- docker-compose >= 1.29
+
+Fa√ßa o clone do projeto e rode o comando `npm install` para instalar as depend√™ncias.
+
+~~~javascript
+npm install
+~~~
+
+Configurar as vari√°veis de ambiente criando um arquivo `.env` na raiz do projeto, e seguindo o exemplo do arquivo `.env.example`.
+
+#### Rodar Docker
+Subir o container  pra rodas as aplica√ß√µes
+
+~~~javascript
+docker-composer up
+~~~
+ou
+~~~javascript
+npm run docker:up
+~~~
+
+#### Startar ambiente de desenvolvimento
+Subir o servidor de desenvolvimento atrav√©z do comando `npm run dev`
+
+~~~javascript
+npm run dev
+~~~
+
+#### Build
+~~~javascript
+npm run build
+~~~
+
+### Startar o ambiente de produ√ß√µes
+
+~~~javascript
+npm start
+~~~
+
+## Testes
+
+#### Rodar todos os testes
+
+~~~javascript
+npm test
+~~~
+
+#### Rodar testes de unidade
+
+~~~javascript
+npm run test:unit
+~~~
+
+#### Rodar testes covarage
+Cobertura de teste 
+~~~javascript
+npm run test:ci
+~~~
+
+## Principais funcionalidades
+- Convers√£o de moedas
+- Listar transa√ß√µes por usu√°rios
+
+## Endpoints da aplica√ß√£o
+
+#### Rota de convers√£o de moedas
+~~~javascript
+[POST] /convert
+~~~
+
+## **Request body**
+~~~javascript
+{
+	"userId": string,
+	"originCurrency": string,
+	"originAmount": number,
+	"destinationCurrency": string
+}
+~~~
+
+## **Responses**
+![Generic badge](https://img.shields.io/badge/OK-200-<COLOR>.svg)
+
+~~~javascript
+{
+	"trasactionId": string,
+	"userId": string,
+	"originCurrency": string,
+	"originAmount": number,
+	"destinationCurrency": string,
+	"destinationValue": number,
+	"currencyTax": number,
+	"timeConvert": string
+}
+~~~
+![Generic badge](https://img.shields.io/badge/bad%20request-400-red)
+
+~~~javascript
+{
+    "error": "string"
+}
+~~~
+
+#### Rota de transa√ß√µes por usu√°rios
+~~~javascript
+[GET] /transactions/${userId}
+~~~
+
+## **Request params**
+~~~javascript
+{
+	"userId": string,
+}
+~~~
+
+## **Responses**
+![Generic badge](https://img.shields.io/badge/OK-200-<COLOR>.svg)
+
+~~~javascript
+[
+	{
+		"userId": string,
+		"originCurrency": string,
+		"originAmount": number,
+		"destinationCurrency": string,
+		"currencyTax": number,
+		"timeConvert": string
+	}
+]
+~~~
+![Generic badge](https://img.shields.io/badge/bad%20request-400-red)
+
+~~~javascript
+{
+    "error": "string"
+}
+~~~
