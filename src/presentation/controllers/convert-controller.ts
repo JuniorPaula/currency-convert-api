@@ -1,3 +1,4 @@
+import { ConvertUsecaseProtocols } from '../../domain/protocols/convent-usecase-protocols'
 import { InvalidParamError } from '../errors/invalid-param-error'
 import { MissingParamError } from '../errors/missing-param-error'
 import { Controller } from '../protocols/controller'
@@ -13,7 +14,7 @@ const FIELDS = [
 ]
 
 export class ConventController implements Controller {
-  constructor(private readonly convertUsecaseStub) {}
+  constructor(private readonly convertUsecaseStub: ConvertUsecaseProtocols) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {

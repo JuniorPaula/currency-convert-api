@@ -1,10 +1,21 @@
-export class ConvertUsecase {
+import {
+  ConvertUsecaseParams,
+  ConvertUsecaseProtocols,
+  Transactions,
+} from '../protocols/convent-usecase-protocols'
+
+export class ConvertUsecase implements ConvertUsecaseProtocols {
   constructor(
     private readonly apiLayerService,
     private readonly convertRepository,
   ) {}
 
-  async convert({ userId, originCurrency, originAmount, destinationCurrency }) {
+  async convert({
+    userId,
+    originCurrency,
+    originAmount,
+    destinationCurrency,
+  }: ConvertUsecaseParams): Promise<Transactions> {
     const response = await this.apiLayerService.execute({
       originCurrency,
       originAmount,
