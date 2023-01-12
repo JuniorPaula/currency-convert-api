@@ -1,6 +1,10 @@
+import {
+  ConvertRepositoryParams,
+  ConvertRepositoryProtocols,
+} from '../protocols/convert-repository-protocols'
 import { MongoProvider } from '../providers/mongodb'
 
-export class ConvertRepository {
+export class ConvertRepository implements ConvertRepositoryProtocols {
   async save({
     userId,
     originCurrency,
@@ -8,7 +12,7 @@ export class ConvertRepository {
     destinationCurrency,
     currencyTax,
     timeConvert,
-  }) {
+  }: ConvertRepositoryParams): Promise<any> {
     const convertColletion = MongoProvider.getCollection('current_convert')
     const res = await convertColletion.insertOne({
       userId,
@@ -19,7 +23,9 @@ export class ConvertRepository {
       timeConvert,
     })
 
-    const result = await convertColletion.findOne({ _id: res.insertedId })
+    const result = await convertColletion.findOne({
+      _id: res.insertedId,
+    })
     return result
   }
 }

@@ -1,4 +1,5 @@
 import { ApiLayerProtocols } from '../../infra/protocols/api-layer-protocols'
+import { ConvertRepositoryProtocols } from '../../infra/protocols/convert-repository-protocols'
 import {
   ConvertUsecaseParams,
   ConvertUsecaseProtocols,
@@ -8,7 +9,7 @@ import {
 export class ConvertUsecase implements ConvertUsecaseProtocols {
   constructor(
     private readonly apiLayerService: ApiLayerProtocols,
-    private readonly convertRepository,
+    private readonly convertRepository: ConvertRepositoryProtocols,
   ) {}
 
   async convert({
