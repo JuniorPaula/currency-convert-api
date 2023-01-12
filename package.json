@@ -4,6 +4,7 @@
   "description": "Teste de seleção NodeJS",
   "main": "index.js",
   "scripts": {
+    "build": "rimraf dist && tsc -p tsconfig.build.json",
     "dev": "ts-node-dev --inspect --ignore-watch node_modules src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
@@ -40,6 +41,7 @@
     "axios": "^1.2.2",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "mongodb": "^4.13.0"
+    "mongodb": "^4.13.0",
+    "rimraf": "^3.0.2"
   }
 }
