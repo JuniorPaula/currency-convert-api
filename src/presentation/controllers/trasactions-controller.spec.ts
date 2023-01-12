@@ -45,7 +45,7 @@ describe('TransactionController', () => {
     }
 
     const httpResponse = await sut.handle(httpRequest)
-    console.log(httpResponse)
+
     expect(httpResponse.statusCode).toBe(400)
     expect(httpResponse.body).toBe('missing param: userId')
   })

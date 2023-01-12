@@ -9,7 +9,7 @@ const makeSut = () => {
   return new ConvertRepository()
 }
 
-describe('Item Mongo Repository', () => {
+describe('ConvertRepository', () => {
   beforeAll(async () => {
     MockDate.set(new Date())
     await MongoProvider.connect(process.env.MONGO_URL)
