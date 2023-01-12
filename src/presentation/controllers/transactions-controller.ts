@@ -1,9 +1,10 @@
+import { TransactionProtocols } from '../../domain/protocols/transaction-protocols'
 import { Controller } from '../protocols/controller'
 import { HttpRequest, HttpResponse } from '../protocols/http'
 import { HttpStatusCodes } from '../utils/http-status-codes'
 
 export class TransactionController implements Controller {
-  constructor(private readonly transactionsUsecase) {}
+  constructor(private readonly transactionsUsecase: TransactionProtocols) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
     try {

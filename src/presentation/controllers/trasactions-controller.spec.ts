@@ -4,10 +4,8 @@ import { TransactionController } from './transactions-controller'
 
 const mockTransactionsUsecase = () => {
   class TransactionsUsecaseStub {
-    private userId: string
-    async load(userId: string) {
-      this.userId = userId
-
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    async load({ userId }) {
       return Promise.resolve([
         {
           trasactionId: '63bf20928a5c7d64453f1462',
