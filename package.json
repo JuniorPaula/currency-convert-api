@@ -4,8 +4,10 @@
   "description": "Teste de seleção NodeJS",
   "main": "index.js",
   "scripts": {
+    "docker:up": "npm run build && docker-compose up -d",
     "build": "rimraf dist && tsc -p tsconfig.build.json",
     "dev": "ts-node-dev --inspect --ignore-watch node_modules src/main/server.ts",
+    "start": "node dist/src/main/server.js",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:verbose": "jest --passWithNoTests --runInBand",
     "test:unit": "npm test -- -c jest-unit-config.js",
