@@ -1,53 +1,13 @@
 # Conversor de moedas
 
-Voc� dever� implementar uma API Rest que seja capaz de realizar a convers�o entre duas moedas
-utilizando taxas de convers�es atualizadas de um servi�o externo.
-
-Para realiza��o da convers�o � necess�rio o ID do usu�rio que deseja realizar a convers�o.
-
-A API dever� registrar cada transa��o de convers�o com todas as informa��es relacionadas e tamb�m
-disponibilizar um endpoint para consulta das transa��es realizadas por um usu�rio.
-
-O projeto dever� ser feito em Node.js com TypeScript.
-
-1. Deve ser poss�vel realizar a convers�o entre 4 moedas no m�nimo (BRL, USD, EUR, JPY);
-1. As taxas de convers�o devem ser obtidas de [https://api.exchangeratesapi.io/latest?base=USD];
-1. As transa��es de convers�o devem ser persistidas no banco de dados (embedded) contendo:
-    * ID do usu�rio;
-    * Moeda origem;
-    * Valor origem;
-    * Moeda destino;
-    * Taxa de convers�o utilizada;
-    * Data/Hora UTC;
-1. Uma transa��o com sucesso deve retornar:
-    * ID da transa��o
-    * ID do usu�rio;
-    * Moeda origem;
-    * Valor origem;
-    * Moeda destino;
-    * Valor destino;
-    * Taxa de convers�o utilizada;
-    * Data/Hora UTC;
-1. Uma transa��o com falha conhecida deve retornar um erro HTTP 400 com a descri��o da falha;
-1. Dever� existir um endpoint para listagem de todas as transa��es realizadas por usu�rio;
-1. Deve haver uma cobertura satisfat�ria de testes;
-1. Deve-se adicionar a esse arquivo explica��es sobre como rodar a aplica��o, e uma apresenta��o sobre o
-projeto: prop�sito, features, motiva��o das principais escolhas de tecnologias, e separa��o das camadas;
-1. Todo o c�digo deve ser em ingl�s;
-1. Disponibilizar o c�digo apenas nesse reposit�rio, sem nenhuma c�pia p�blica, para evitar pl�gio;
-
-## Itens desej�veis
-* Logs
-* Tratamento de exce��es
-* Documenta��o
-* Coes�o de commits
-* Mensagens de commits claras
-* Configura��o de lint
-* Testes unit�rios
-* Testes de integra��o
-* Documenta��o dos endpoints
-* Estar rodando e dispon�vel (Ex: Heroku, ou similar)
-* CI/CD
+![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![Mongodb](https://img.shields.io/badge/mongodb-6DA55F?style=for-the-badge&logo=mongodb&logoColor=white)
+![Jest](https://img.shields.io/badge/-jest-%23C21325?style=for-the-badge&logo=jest&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
+![NPM](https://img.shields.io/badge/NPM-%23000000.svg?style=for-the-badge&logo=npm&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)
 
 # Instruções do projeto
 
